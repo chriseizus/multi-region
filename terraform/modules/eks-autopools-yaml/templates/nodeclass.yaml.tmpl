@@ -1,0 +1,26 @@
+apiVersion: eks.amazonaws.com/v1
+kind: NodeClass
+metadata:
+  name: ${name}
+spec:
+  subnetSelectorTerms:
+  - ids:
+%{ for id in subnet_ids ~}
+    - ${id}
+%{ endfor ~}
+%{ if length(sg_ids) > 0 ~}
+  securityGroupSelectorTerms:
+  - ids:
+%{ for id in sg_ids ~}
+    - ${id}
+%{ endfor ~}
+%{ endif ~}
+%{ if include_pod_subnets ~}
+  podSubnetSelectorTerms:
+  - ids:
+%{ for id in pod_subnet_ids ~}
+    - ${id}
+%{ endfor ~}
+%{ endif ~}
+  ephemeralStorage:
+    size: 80Gi

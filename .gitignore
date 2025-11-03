@@ -1,0 +1,15 @@
+# Terraform-specific files
+.terraform/
+*.tfstate
+*.tfstate.*.backup
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+.terraformrc
+terraform.rc
+override.tf
+override.tf.json
+*._override.tf
+*._override.tf.json
+.vscode/
+.DS_Store

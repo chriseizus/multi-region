@@ -1,0 +1,24 @@
+name: vpc-a
+primary_cidr: "10.0.0.0/16"
+az_names: ["us-east-1a", "us-east-1b"]
+
+# mesh-ew：每 AZ 一个 /24（会作为 VPC 附加 CIDR 关联）
+mesh_ew:
+  mode: per_az
+  per_az:
+    - { az: "us-east-1a", cidr: "100.64.0.0/24" }
+    - { az: "us-east-1b", cidr: "100.64.1.0/24" }
+
+# NAT 策略：测试期省钱只建 1 套
+single_nat_gateway: true
+
+# 在本 VPC 的 mesh-ew 路由表里，打到“对端区域”的 mesh 段（示例）
+mesh_peer_cidrs:
+  - "100.65.0.0/16"
+
+enable_vpc_endpoints:
+  s3: true
+
+tags:
+  Environment: dev
+  Owner: platform
